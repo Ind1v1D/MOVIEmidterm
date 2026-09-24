@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>IndiviD — Backend Developer</title>
+<meta name="theme-color" content="#f8fbff" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg-top: #f8fbff;
+    --bg-bottom: #e3ecf7;
+    --surface: #ffffff;
+    --surface-border: #dfe6ee;
+    --ink: #3a4956;
+    --ink-soft: #6b7c8d;
+    --ink-faint: #96a6b7;
+    --accent: #2f6fed;
+    --accent-soft: #eaf1ff;
+    --accent-press: #2557c4;
+    --page-ink: var(--ink);
+    --page-ink-soft: var(--ink-soft);
+    --font-display: "Newsreader", "Iowan Old Style", serif;
+    --font-body: "Inter", system-ui, sans-serif;
+    --radius-lg: 28px;
+    --radius-md: 16px;
+    --radius-sm: 999px;
+    --shadow-soft: 0 18px 45px -20px rgba(28, 61, 110, 0.25);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--ink);
+    background: var(--bg-top);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  button {
+    font-family: inherit;
+  }
+
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+
+  .page {
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.9), transparent 60%),
+      linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  .page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(47, 111, 237, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(47, 111, 237, 0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(circle at 50% 20%, black, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ---------- Navbar ---------- */
+
+  .navbar {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 28px 32px 0;
+  }
+
+  .navbar__brand {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    text-decoration: none;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+  }
+
+  .navbar__links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    font-size: 0.92rem;
+  }
+
+  .navbar__links a {
+    text-decoration: none;
+    color: var(--ink-soft);
+  }
+
+  .navbar__links a:hover {
+    color: var(--accent);
+  }
+
+  .navbar__cta {
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--surface-border);
+    color: var(--ink) !important;
+    background: var(--surface);
+    font-weight: 500;
+  }
+
+  .navbar__cta:hover {
+    border-color: var(--accent);
+  }
+
+  /* ---------- Hero ---------- */
+
+  .hero {
+    position: relative;
+    z-index: 5;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 72px 24px 96px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero__avatar-wrap {
+    margin-bottom: 28px;
+  }
+
+  .hero__avatar {
+    width: 108px;
+    height: 108px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--surface);
+    box-shadow: var(--shadow-soft);
+    display: block;
+  }
+
+  .hero__eyebrow {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .hero__headline {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.9rem, 4.2vw, 2.7rem);
+    line-height: 1.28;
+    margin: 0 0 16px;
+    color: var(--page-ink);
+    letter-spacing: -0.01em;
+  }
+
+  .hero__subline {
+    margin: 0 0 40px;
+    color: var(--page-ink-soft);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 42ch;
+  }
+
+  /* ---------- About ---------- */
+
+  .about {
+    position: relative;
+    z-index: 5;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px 96px;
+  }
+
+  .about__intro {
+    max-width: 62ch;
+    margin: 0 auto 44px;
+    text-align: center;
+  }
+
+  .about__intro h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.7rem;
+    margin: 0 0 18px;
+    color: var(--page-ink);
+  }
+
+  .about__intro p {
+    color: var(--page-ink-soft);
+    line-height: 1.7;
+    margin: 0 0 14px;
+  }
+
+  .about__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .about__card {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    padding: 22px 20px;
+  }
+
+  .about__card h3 {
+    margin: 0 0 8px;
+    font-size: 0.98rem;
+    color: var(--ink);
+  }
+
+  .about__card p {
+    margin: 0;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  /* ---------- Projects ---------- */
+
+  .projects {
+    position: relative;
+    z-index: 5;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+
+  .projects__intro {
+    max-width: 62ch;
+    margin: 0 auto 44px;
+    text-align: center;
+  }
+
+  .projects__intro h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.7rem;
+    margin: 0 0 18px;
+    color: var(--page-ink);
+  }
+
+  .projects__intro p {
+    color: var(--page-ink-soft);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .projects__grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    padding: 26px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .project-card:hover {
+    border-color: var(--accent);
+  }
+
+  .project-card h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--ink);
+  }
+
+  .project-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+
+  .project-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: auto;
+    padding-top: 6px;
+  }
+
+  .project-tag {
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    border: 1px solid var(--surface-border);
+    padding: 3px 10px;
+    border-radius: var(--radius-sm);
+    background: transparent;
+  }
+
+  .project-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .project-card__link:hover {
+    color: var(--accent-press);
+    text-decoration: underline;
+  }
+
+  /* ---------- Contact ---------- */
+
+  .contact {
+    position: relative;
+    z-index: 5;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 24px 110px;
+    text-align: center;
+  }
+
+  .contact h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.7rem;
+    margin: 0 0 10px;
+    color: var(--page-ink);
+  }
+
+  .contact__lead {
+    color: var(--page-ink-soft);
+    margin: 0 0 28px;
+  }
+
+  .contact__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .contact__pill {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--radius-md);
+    padding: 14px 20px;
+  }
+
+  .contact__pill:hover {
+    border-color: var(--accent);
+  }
+
+  .contact__label {
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+  }
+
+  .contact__value {
+    font-size: 0.94rem;
+    color: var(--ink);
+  }
+
+  /* ---------- Footer ---------- */
+
+  .footer {
+    position: relative;
+    z-index: 5;
+    text-align: center;
+    padding: 24px;
+    font-size: 0.8rem;
+    color: var(--page-ink-soft);
+  }
+
+  /* ---------- Responsive ---------- */
+
+  @media (max-width: 720px) {
+    .projects__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .navbar {
+      padding: 20px 20px 0;
+    }
+
+    .navbar__links {
+      gap: 16px;
+      font-size: 0.85rem;
+    }
+
+    .hero {
+      padding: 56px 18px 72px;
+    }
+
+    .about__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script crossorigin src="https://cdn.jsdelivr.net/npm/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://cdn.jsdelivr.net/npm/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  // ---------- Components ----------
+
+  function Navbar() {
+    return (
+      <header className="navbar">
+        <a className="navbar__brand" href="#top">IndiviD</a>
+        <nav className="navbar__links">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+          <a href="https://github.com/Ind1v1D" target="_blank" rel="noreferrer" className="navbar__cta">GitHub</a>
+        </nav>
+      </header>
+    );
+  }
+
+  function Hero() {
+    return (
+      <section className="hero" id="top">
+        <div className="hero__avatar-wrap">
+        <img
+          className="hero__avatar"
+          src="PFP.jpg" alt="Portrait of IndiviD"
+        />
+        </div>
+        <span className="hero__eyebrow">Backend Developer</span>
+        <h1 className="hero__headline">Hi, I'm IndiviD — I build the backend other things stand on.</h1>
+        <p className="hero__subline">
+          Currently building the Social Impact Dashboard with a small university team — data models, APIs,
+          and the plumbing a good frontend needs to feel effortless.
+        </p>
+      </section>
+    );
+  }
+
+  function About() {
+    const cards = [
+      { title: "Data pipelines", text: "Aggregating scattered ESG social metrics into one clean, queryable model." },
+      { title: "API design", text: "Building the endpoints a frontend can actually build a dashboard on." },
+      { title: "Team handoffs", text: "Working closely with a frontend teammate so data shapes match what the UI needs." },
+    ];
+    return (
+      <section className="about" id="about">
+        <div className="about__intro">
+          <h2>About me</h2>
+          <p>
+            I'm a backend developer on a university team building the Social Impact Dashboard — a platform that
+            pulls together ESG social-component metrics and turns them into something people can actually read
+            and act on. My part of that is mostly invisible: the data model, the aggregation logic, and the API
+            that feeds the interface my teammate designs.
+          </p>
+          <p>
+            I like problems with a clear shape and a wrong answer that's easy to spot — which is most of what
+            backend work is. Outside of that, I'm still figuring out what belongs on a page like this, which is
+            part of why it looks the way it does.
+          </p>
+        </div>
+        <ul className="about__grid">
+          {cards.map((c) => (
+            <li className="about__card" key={c.title}>
+              <h3>{c.title}</h3>
+              <p>{c.text}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    );
+  }
+
+  function Projects() {
+    const projects = [
+      {
+        name: "Qamqor",
+        description:
+          "A care-services platform connecting families with vetted caregivers. I built the scheduling engine, caregiver matching logic, and the REST API that powers bookings and real-time availability.",
+        tags: ["Node.js", "PostgreSQL", "REST API", "Redis"],
+        link: "https://github.com/Ind1v1D",
+      },
+      {
+        name: "AI Contract Checker",
+        description:
+          "A tool that scans legal contracts, flags risky clauses, and suggests alternatives using an LLM pipeline. I handled the document parsing, chunking strategy, and the scoring API that returns structured risk reports.",
+        tags: ["Python", "FastAPI", "LLM", "Vector DB"],
+        link: "https://github.com/Ind1v1D",
+      },
+    ];
+    return (
+      <section className="projects" id="projects">
+        <div className="projects__intro">
+          <h2>Projects</h2>
+          <p>A couple of things I've built and shipped — backend-heavy, but with enough UI to prove the data actually works.</p>
+        </div>
+        <ul className="projects__grid">
+          {projects.map((p) => (
+            <li className="project-card" key={p.name}>
+              <h3>{p.name}</h3>
+              <p>{p.description}</p>
+              <div className="project-card__tags">
+                {p.tags.map((t) => (
+                  <span className="project-tag" key={t}>{t}</span>
+                ))}
+              </div>
+              <a className="project-card__link" href={p.link} target="_blank" rel="noreferrer">
+                View on GitHub →
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    );
+  }
+
+  function Contact() {
+    const items = [
+      { label: "Email", value: "yerdauletmakhambet@gmail.com", href: "mailto:yerdauletmakhambet@gmail.com" },
+      { label: "GitHub", value: "github.com/Ind1v1D", href: "https://github.com/Ind1v1D" },
+      { label: "Telegram", value: "t.me/IndlvlD", href: "https://t.me/IndlvlD" },
+    ];
+    return (
+      <section className="contact" id="contact">
+        <h2>How to reach me</h2>
+        <p className="contact__lead">No forms to fill out — pick whichever channel you'd actually use.</p>
+        <ul className="contact__list">
+          {items.map((item) => (
+            <li key={item.label}>
+              <a className="contact__pill" href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+                <span className="contact__label">{item.label}</span>
+                <span className="contact__value">{item.value}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    );
+  }
+
+  function Footer() {
+    return (
+      <footer className="footer">
+        <span>Built with React · 2026</span>
+      </footer>
+    );
+  }
+
+  // ---------- App ----------
+
+  function App() {
+    return (
+      <div className="page">
+        <Navbar />
+        <main>
+          <Hero />
+          <About />
+          <Projects />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<App />);
+</script>
+</body>
+</html>
