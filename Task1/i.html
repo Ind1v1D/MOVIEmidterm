@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simple Async Task Runner</title>
+<title>Assignment #1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -173,7 +173,7 @@
 
 <main>
 
-  <h1>Simple Async Task Runner</h1>
+  <h1>Simple Task Runner</h1>
   <p class="intro">A beginner-friendly demo of setTimeout, async/await, Promise.all, and the event loop.</p>
 
   <h2>1. Run a task</h2>
@@ -227,7 +227,7 @@
     return new Promise(function (resolve) {
       setTimeout(resolve, ms);
     });
-  }
+  } 
 
   async function runTask(name) {
     const statusEl = document.getElementById('status-' + name);
